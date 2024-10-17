@@ -17,6 +17,7 @@ import com.liskovsoft.sharedutils.locale.LocaleUtility;
 import com.liskovsoft.sharedutils.mylogger.Log;
 import com.liskovsoft.sharedutils.rx.RxHelper;
 import com.liskovsoft.smartyoutubetv2.common.R;
+import com.liskovsoft.smartyoutubetv2.common.app.models.data.AllowListManager;
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.BrowseSection;
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.SettingsGroup;
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.SettingsItem;
@@ -396,6 +397,9 @@ public class BrowsePresenter extends BasePresenter<BrowseView> implements Sectio
         if (belongsToChannelUploadsMultiGrid(item)) {
             updateChannelUploadsMultiGrid(item);
         } else {
+            if (!AllowListManager.getInstance().isAllowed(item.getAuthor())) {
+                return;
+            }
             VideoActionPresenter.instance(getContext()).apply(item);
         }
 

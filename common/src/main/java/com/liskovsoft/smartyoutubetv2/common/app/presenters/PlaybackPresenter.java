@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.liskovsoft.mediaserviceinterfaces.yt.data.MediaItemMetadata;
+import com.liskovsoft.smartyoutubetv2.common.app.models.data.AllowListManager;
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.Video;
 import com.liskovsoft.smartyoutubetv2.common.app.models.playback.BasePlayerController;
 import com.liskovsoft.smartyoutubetv2.common.app.models.playback.controllers.AutoFrameRateController;
@@ -383,6 +384,9 @@ public class PlaybackPresenter extends BasePresenter<PlaybackView> implements Pl
 
     @Override
     public void onSuggestionItemClicked(Video item) {
+        if (!AllowListManager.getInstance().isAllowed(item.getAuthor())) {
+            return;
+        }
         process(listener -> listener.onSuggestionItemClicked(item));
     }
 
