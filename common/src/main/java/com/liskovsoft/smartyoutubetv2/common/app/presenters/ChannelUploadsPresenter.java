@@ -11,6 +11,7 @@ import com.liskovsoft.sharedutils.mylogger.Log;
 import com.liskovsoft.sharedutils.rx.RxHelper;
 import com.liskovsoft.smartyoutubetv2.common.R;
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.SimpleMediaItem;
+import com.liskovsoft.smartyoutubetv2.common.app.models.data.AllowListManager;
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.Video;
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.VideoGroup;
 import com.liskovsoft.smartyoutubetv2.common.app.presenters.base.BasePresenter;
@@ -82,6 +83,9 @@ public class ChannelUploadsPresenter extends BasePresenter<ChannelUploadsView> i
 
     @Override
     public void onVideoItemClicked(Video item) {
+        if (!AllowListManager.getInstance().isAllowed(item.getAuthor())) {
+            return;
+        }
         VideoActionPresenter.instance(getContext()).apply(item);
     }
 
