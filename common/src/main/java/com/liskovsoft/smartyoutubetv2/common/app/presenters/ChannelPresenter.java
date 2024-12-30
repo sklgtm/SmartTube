@@ -102,7 +102,7 @@ public class ChannelPresenter extends BasePresenter<ChannelView> implements Vide
 
     @Override
     public void onVideoItemClicked(Video item) {
-        if (!AllowListManager.getInstance().isAllowed(item.getAuthor())) {
+        if (!AllowListManager.getInstance().isAllowed(mChannel.getAuthor())) {
             return;
         }
         VideoActionPresenter.instance(getContext()).apply(item);
